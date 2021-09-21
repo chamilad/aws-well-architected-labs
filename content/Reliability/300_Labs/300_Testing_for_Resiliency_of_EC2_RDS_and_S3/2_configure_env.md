@@ -1,7 +1,7 @@
 ---
 title: "Configure Execution Environment"
 menutitle: "Execution Environment"
-date: 2020-04-24T11:16:09-04:00
+date: 2021-09-14T11:16:08-04:00
 chapter: false
 weight: 2
 pre: "<b>2. </b>"
@@ -10,6 +10,8 @@ pre: "<b>2. </b>"
 Failure injection is a means of testing resiliency by which a specific failure type is simulated on a service and its response is assessed.
 
 You have a choice of environments from which to execute the failure injections for this lab. Bash scripts are a good choice and can be used from a Linux command line. If you prefer Python, Java, Powershell, or C#, then instructions for these are also provided.
+
+In addition to custom scripts, you can also perform failure injection experiments using [AWS Fault Injection Simulator (FIS)](https://aws.amazon.com/fis/).
 
 ### 2.1 Setup AWS credentials and configuration
 
@@ -137,8 +139,6 @@ Choose the appropriate section below for your language
 
 1. If you do not have the AWS Tools for Powershell, download and install them following the instructions here. <https://aws.amazon.com/powershell/>
 
-
-
 1. Download the {{% githublink link_name="resiliency PowerShell scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
       * [powershell/fail_instance.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/fail_instance.ps1)
       * [powershell/failover_rds.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/failover_rds.ps1)
@@ -147,5 +147,18 @@ Choose the appropriate section below for your language
 1. If your PowerShell scripts are refused authorization to access your AWS account, consult [Getting Started with the AWS Tools for Windows PowerShell](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-started.html)
 
 {{% /expand %}}
+
+### 2.4 Create IAM Role for FIS
+
+In this lab, some of the experiments will be executed AWS Fault Injection Simulator (FIS) in addition to using custom scripts. FIS needs a service role to inject failures for various components of a workload.
+
+**This IAM Role has already been created for you as part of the infrastructure deployment**
+
+You may proceed to the next step.
+
+{{%expand "If you would like to view the instructions on how to create the IAM Role for FIS (for your information), then click here:" %}}
+**These instructions are here for informational purposes only. You DO NOT need to execute these as this IAM Role was created for you as part of the infrastructure deployment**
+{{% common/FISExecutionRole %}}
+{{% /expand%}}
 
 {{< prev_next_button link_prev_url="../1_deploy_infra" link_next_url="../3_failure_injection_prep/" />}}
