@@ -85,24 +85,23 @@ Choose the appropriate section below for your language
 {{% /expand %}}
 {{% expand "Click here for instructions if using Java:" %}}
 
-1. The command line utility in Java requires Java 8 SE.  
+1. Java and Maven must be installed
 
-        $ java -version
-        openjdk version "1.8.0_222"
-        OpenJDK Runtime Environment (build 1.8.0_222-8u222-b10-1ubuntu1~18.04.1-b10)
-        OpenJDK 64-Bit Server VM (build 25.222-b10, mixed mode)
+        $ mvn -version
+        Apache Maven 3.0.5 (Red Hat 3.0.5-17)
+        Maven home: /usr/share/maven
+        Java version: 1.8.0_302, vendor: Red Hat, Inc.
+        ...
 
-1. If you have java 1.7 installed (as will be the case for In Amazon Linux), you need to install Java 8 and remove Java 7.
+1. If Maven is not installed, or Java is not 1.8 or higher, then install Maven and Java
 
       * For Amazon Linux and RedHat
 
-            $ sudo yum install java-1.8.0-openjdk
-            $ sudo yum remove java-1.7.0-openjdk
+            $ sudo yum install maven
 
       * For Debian, Ubuntu
 
-            $ sudo apt install openjdk-8-jdk
-            $ sudo apt install openjdk-7-jdk
+            $ sudo apt install maven
 
       * Next choose one of the following options: **Option A** or **Option B**.
 
@@ -116,13 +115,14 @@ Choose the appropriate section below for your language
 
       1. go to the build directory
 
-              cd aws-well-architected-labs/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/java/appresiliency
+              cd aws-well-architected-labs/static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/java/appresiliency/
 
 1. **Option B**:
       1. Download the zipfile of the executables at the following URL <https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/javaresiliency.zip>
       1. go to the build directory: `cd java/appresiliency`
 
 1. Build: `mvn clean package shade:shade`
+      
 
 1. `cd target` - this is where your `jar` files were built and where you can run from the command line
 

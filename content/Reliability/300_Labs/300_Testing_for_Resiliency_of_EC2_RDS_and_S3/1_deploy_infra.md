@@ -129,7 +129,9 @@ Here you will build a state machine using AWS Step Functions and AWS Lambda that
 
      * Above screen shot is for **single region**. for **multi region** see [this diagram instead]({{< ref "Documentation/Multi_Region_State_Machine.md" >}})
 
-### 1.5 View website for test web service {#website}
+> **Note:** To save time, you can move on to [Step 2](../2_configure_env) now while the application is deploying. Come back later for Step 1.5 after deployment is complete.
+
+### 1.5 View website for test application {#website}
 
 1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>.
       * click on the `WebServersforResiliencyTesting` stack
