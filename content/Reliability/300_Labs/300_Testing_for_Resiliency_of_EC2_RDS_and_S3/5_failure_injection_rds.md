@@ -11,6 +11,10 @@ weight: 5
 
 This failure injection will simulate a critical failure of the Amazon RDS DB instance.
 
+In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **hypothesis**.  For this experiment the hypothesis is:
+> Hypothesis: If the primary RDS instance dies, then availability will not be impacted
+
+
 1. Before starting, view the deployment machine in the [AWS Step Functions console](https://console.aws.amazon.com/states) to verify the deployment has reached the stage where you can start testing:
     * **single region**: `WaitForMultiAZDB` shows completed (green)
     * **multi region**: both `WaitForRDSRRStack1` and `CheckRDSRRStatus1` show completed (green)
@@ -87,11 +91,55 @@ Watch how the service responds. Note how AWS systems help maintain service avail
 
 1. [optional] Go to the [Auto scaling group](http://console.aws.amazon.com/ec2/autoscaling/home?region=us-east-2#AutoScalingGroups:) and AWS Elastic Load Balancer [Target group](http://console.aws.amazon.com/ec2/v2/home?region=us-east-2#TargetGroups:) consoles to see how EC2 instance and traffic routing was handled
 
-### 5.3 RDS failure injection using AWS Fault Injection Simulator (FIS)
+#### 5.2.4 RDS failure injection - results
+
+* AWS RDS Database failover took less than a minute
+* Time for AWS Auto Scaling to detect that the instances were unhealthy and to start up new ones took four minutes. This resulted in a four minute non-availability event.
+
+Our requirements for availability require that downtime be under one minute.  Therefore our **hypothesis** is _not_ confirmed:
+> Hypothesis: If the primary RDS instance dies, then availability will not be impacted
+
+Chaos Engineering uses the scientific method. We ran the experiment, and in the verify step found that our hypothesis was not confirmed, therefore the next step is to _improve_ and run the experiment again.
+
+![ChaosEngineeringCycle](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/ChaosEngineeringCycle.png)
+
+### 5.3 RDS failure injection - improving resiliency
+
+In this section you reduce the unavailability time from four minutes to _under one minute_.
+
+You observed before that failover of the RDS instance itself takes under one minute. However the servers you are running are configured such that they cannot recognize that the IP address for the RDS instance DNS name has changed from the primary to the standby. Availability is only regained once the servers fail to reach the primary, are marked unhealthy, and then are replaced. This accounts for the four minute delay.  **In this part of the lab you will update the server code to be more resilient to RDS failover. The new code can recognize underlying changes in IP address for the RDS instance DNS name**
+
+Use _either_ the **Express Steps** or **Detailed Steps** below:
+
+##### Express Steps
+1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>
+1. For the **WebServersForResiliencyTesting** Cloudformation stack
+   1. Redeploy the stack and **Use current template**
+   1. Change the **BootObject** parameter to `server_with_reconnect.py`
+
+##### Detailed Steps
+{{%expand "Click here for detailed steps for updating the Cloudformation stack:" %}}
+1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>
+1. Click on **WebServersForResiliencyTesting** Cloudformation stack
+1. Click the **Update** button
+1. Select **Use current template** then click **Next**
+1. On the **Parameters** page, find the  **BootObject** parameter and replace the value there with `server_with_reconnect.py`
+1. Click **Next**
+1. Click **Next**
+1. Scroll to the bottom and under **Change set preview** note that you are changing the **WebServerAutoscalingGroup** and **WebServerLaunchConfiguration**. This CloudFormation deployment will modify the launch configuration to use the improved server code.
+1. Check **I acknowledge that AWS CloudFormation might create IAM resources.**
+1. Click **Update stack**
+1. Go the **Events** tab for the **WebServersForResiliencyTesting** Cloudformation stack and observe the progress. When the status is **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue.
+{{% /expand%}}
+
+* Now re-run the experiment as per the steps below
+* Before we used a customer script. For this run of the experiment, we will show how to use AWS Fault Injection Simulator (FIS)
+
+### 5.4 RDS failure injection using AWS Fault Injection Simulator (FIS) {#rdsfailureinjectionfis}
 
 As in section **5.1**, you will simulate a critical failure of the Amazon RDS DB instance, but using FIS.
 
-#### 5.3.1 Create experiment template
+#### 5.4.1 Create experiment template
 
 1. Go to the RDS Dashboard in the AWS Console at <http://console.aws.amazon.com/rds>
 
@@ -143,7 +191,7 @@ As in section **5.1**, you will simulate a critical failure of the Amazon RDS DB
 
     ![CreateTemplate](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/CreateTemplate.png?classes=lab_picture_auto)
 
-#### 5.3.2 Run the experiment
+#### 5.4.2 Run the experiment
 
 1. Click on **Experiment templates** from the menu on the left.
 
@@ -163,53 +211,19 @@ As in section **5.1**, you will simulate a critical failure of the Amazon RDS DB
 
 1. Revisit [section **5.2**](#response) to observe the system response to the RDS instance failure.
 
-### 5.4 RDS failure injection - conclusion
-
-* AWS RDS Database failover took less than a minute
-* Time for AWS Auto Scaling to detect that the instances were unhealthy and to start up new ones took four minutes. This resulted in a four minute non-availability event.
-
-#### 5.4.1 [OPTIONAL] RDS failure injection - improving resiliency
-
-In this section you reduce the unavailability time from four minutes to _under one minute_.
-
-{{% notice note %}}
-This part of the RDS failure simulation is optional. If you are running this lab as part of a live workshop, then you may want to skip this and come back to it later.
-{{% /notice %}}
-
-You observed before that failover of the RDS instance itself takes under one minute. However the servers you are running are configured such that they cannot recognize that the IP address for the RDS instance DNS name has changed from the primary to the standby. Availability is only regained once the servers fail to reach the primary, are marked unhealthy, and then are replaced. This accounts for the four minute delay.  **In this part of the lab you will update the server code to be more resilient to RDS failover. The new code can recognize underlying changes in IP address for the RDS instance DNS name**
-
-Use _either_ the **Express Steps** or **Detailed Steps** below:
-
-##### Express Steps
-1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>
-1. For the **WebServersForResiliencyTesting** Cloudformation stack
-   1. Redeploy the stack and **Use current template**
-   1. Change the **BootObject** parameter to `server_with_reconnect.py`
-
-##### Detailed Steps
-{{%expand "Click here for detailed steps for updating the Cloudformation stack:" %}}
-1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>
-1. Click on **WebServersForResiliencyTesting** Cloudformation stack
-1. Click the **Update** button
-1. Select **Use current template** then click **Next**
-1. On the **Parameters** page, find the  **BootObject** parameter and replace the value there with `server_with_reconnect.py`
-1. Click **Next**
-1. Click **Next**
-1. Scroll to the bottom and under **Change set preview** note that you are changing the **WebServerAutoscalingGroup** and **WebServerLaunchConfiguration**. This CloudFormation deployment will modify the launch configuration to use the improved server code.
-1. Check **I acknowledge that AWS CloudFormation might create IAM resources.**
-1. Click **Update stack**
-1. Go the **Events** tab for the **WebServersForResiliencyTesting** Cloudformation stack and observe the progress. When the status is **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue.
-{{% /expand%}}
-
-##### RDS failure injections - observations
-Now repeat the RDS failure injection steps on this page, starting with [**5.1 RDS failure injection**]({{< ref "#rdsfailureinjection" >}}).
+#### 5.4.3 RDS failure injection, second experiment - results
 
 * You will observe that the unavailability time is now under one minute
 * What else is different compared to the previous time the RDS instance failed over?
 
+### 5.5 RDS failure injection - conclusion
+
+After making the necessary _improvements_, now our **hypothesis** is confirmed:
+> Hypothesis: If the primary RDS instance dies, then availability will not be impacted
+
 ---
 
-#### Resources
+### Resources
 
 *__Learn more__: After the lab see [High Availability (Multi-AZ) for Amazon RDS](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Concepts.MultiAZ.html) for more details on high availability and failover support for DB instances using Multi-AZ deployments.*
 

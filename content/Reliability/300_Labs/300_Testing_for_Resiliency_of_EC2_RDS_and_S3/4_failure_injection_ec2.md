@@ -11,6 +11,9 @@ weight: 4
 
 This failure injection will simulate a critical problem with one of the three web servers used by your service.
 
+In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **hypothesis**.  For this experiment the hypothesis is:
+> Hypothesis: If one EC2 instance dies, then availability will not be impacted
+
 1. Before starting, view the deployment machine in the [AWS Step Functions console](https://console.aws.amazon.com/states) to verify the deployment has reached the stage where you can start testing:
     * **single region**: `WaitForWebApp` shows completed (green)
     * **multi region**: `WaitForWebApp1` shows completed (green)
@@ -211,5 +214,9 @@ As in section **4.1**, you will simulate a critical problem with one of the thre
 ### 4.4 EC2 failure injection - conclusion
 
 By deploying multiple servers and using Elastic Load Balancing, the workload can suffer the loss of a server but experience no availability disruption. This is because user traffic is automatically routed to the healthy servers and Amazon Auto Scaling ensures unhealthy hosts are removed and replaced with healthy ones to maintain high availability.
+
+Our **hypothesis** is confirmed:
+> Hypothesis: If one EC2 instance dies, then availability will not be impacted
+
 
 {{< prev_next_button link_prev_url="../3_failure_injection_prep" link_next_url="../5_failure_injection_rds/" />}}

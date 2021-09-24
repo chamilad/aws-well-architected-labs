@@ -11,6 +11,9 @@ weight: 6
 
 This failure injection will simulate a critical problem with one of the three AWS Availability Zones (AZs) used by your service. AWS Availability Zones are  powerful tools for helping build highly available applications. If an application is partitioned across AZs, companies are better isolated and protected from issues such as lightning strikes, tornadoes, earthquakes and more.
 
+In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **hypothesis**.  For this experiment the hypothesis is:
+> Hypothesis: If an entire Availability Zone dies, then availability will not be impacted
+
 1. Go to the RDS Dashboard in the AWS Console at <http://console.aws.amazon.com/rds> and note which Availability Zone the AWS RDS _primary_ DB instance is in.
       * **Note**: If you previously ran the **RDS Failure Injection test**, you must wait until the console shows the AZs for the _primary_ and _standby_ instances as swapped, before running this test
       * A good way to run the AZ failure injection is first in an AZ _other_ than this - we'll call this **Scenario 1**
@@ -71,6 +74,9 @@ This scenario is similar to a combination of the RDS failure injection along wit
 #### 6.2.4 AZ failure injection - conclusion
 
 This similarity between **scenario 1** and the EC2 failure test, and between **scenario 2** and the RDS failure test is illustrative of how an AZ failure impacts your system. The resources in that AZ will have no or limited availability. With the strong partitioning and isolation between Availability Zones however, resources in the other AZs continue to provide your service with needed functionality. **Scenario 1** results in loss of the load balancer and web server capabilities in one AZ, while **Scenario 2** adds to that the additional loss of the data tier. By ensuring that every tier of your system is in multiple AZs, you create a partitioned architecture resilient to failure.
+
+Our **hypothesis** is confirmed:
+> Hypothesis: If an entire Availability Zone dies, then availability will not be impacted
 
 #### 6.2.5 AZ failure recovery
 
