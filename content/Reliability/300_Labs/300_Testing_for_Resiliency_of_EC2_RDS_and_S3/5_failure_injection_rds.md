@@ -139,6 +139,10 @@ Use _either_ the **Express Steps** or **Detailed Steps** below:
 
 As in section **5.1**, you will simulate a critical failure of the Amazon RDS DB instance, but using FIS.
 
+{{% notice note %}}
+We would not normally change our execution approach as part of the "**improve / experiment**" cycle. However, for this lab it is illustrative to see the different ways that the experiment can be executed.
+{{% /notice %}}
+
 #### 5.4.1 Create experiment template
 
 1. Go to the RDS Dashboard in the AWS Console at <http://console.aws.amazon.com/rds>

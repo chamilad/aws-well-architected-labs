@@ -121,9 +121,17 @@ _Draining_ allows existing, in-flight requests made to an instance to complete, 
 _Auto Scaling_ helps you ensure that you have the correct number of Amazon EC2 instances available to handle the load for your workload.
   * *__Learn more__*: After the lab see [Auto Scaling Groups](_https://docs.aws.amazon.com/autoscaling/ec2/userguide/AutoScalingGroup.html_) to learn more how auto scaling groups are setup and how they distribute instances
 
-### 4.3 EC2 failure injection using AWS Fault Injection Simulator (FIS)
+### 4.3 [Optional] EC2 failure injection using AWS Fault Injection Simulator (FIS)
 
-As in section **4.1**, you will simulate a critical problem with one of the three web servers used by your service, but using FIS. You can create an experiment template and use this template to run failure injection experiments on your resources.
+You can also use AWS FIS to simulate failure of an EC2 instance. This step is _optional_. You will get experience using AWS FIS later during the RDS failure experiment and application failure experiments.
+
+{{% notice note %}}
+If you are running this lab as part of a live workshop, then skip this step and come back to it later if you wish
+{{% /notice %}}
+
+{{%expand "Click here for instructions to simulate EC2 instance failure using AWS FIS:" %}}
+
+As in section **4.1**, you will simulate a critical problem with one of the three web servers used by your service, but using AWS FIS. You can create an experiment template and use this template to run failure injection experiments on your resources.
 
 #### 4.3.1 Create experiment template
 
@@ -145,7 +153,7 @@ As in section **4.1**, you will simulate a critical problem with one of the thre
 
     ![NavToTargetGroupAndScalingGroup](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/NavToTargetGroupAndScalingGroup.png)
 
-1. Navigate to the FIS console at <http://console.aws.amazon.com/fis> and click **Experiment templates** in the left pane.
+1. Navigate to the AWS FIS console at <http://console.aws.amazon.com/fis> and click **Experiment templates** in the left pane.
 
 1. Click on **Create expermient template** to define the type of failure you want to inject.
 
@@ -210,6 +218,8 @@ As in section **4.1**, you will simulate a critical problem with one of the thre
            ![EC2ShuttingDown](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/EC2ShuttingDown.png)
 
 1. Revisit [section **4.2**](#response) to observe the system response to the EC2 failure.
+
+{{% /expand%}}
 
 ### 4.4 EC2 failure injection - conclusion
 

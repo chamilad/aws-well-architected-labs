@@ -12,7 +12,7 @@ weight: 7
 This failure injection will simulate a critical failure of the web server running on the EC2 instances using FIS.
 
 In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **hypothesis**.  For this experiment the hypothesis is:
-> Hypothesis: If an the server process on a single instance is killed, then availability will not be impacted
+> Hypothesis: If the server process on a single instance is killed, then availability will not be impacted
 
 Before starting, view the deployment machine in the [AWS Step Functions console](https://console.aws.amazon.com/states) to verify the deployment has reached the stage where you can start testing:
   * **single region**: `WaitForWebApp` shows completed (green)
@@ -135,6 +135,6 @@ _Auto Scaling_ helps you ensure that you have the correct number of Amazon EC2 i
 In this section, you simulated an application level failure where the web server process running the application was killed using FIS and SSM. Although there was no infrastructure failure, your workload was able to detect and correct the issue by replacing the EC2 instance. Deploying multiple servers and Elastic Load Balancing enables a service suffer the loss of a server with no availability disruptions as user traffic is automatically routed to the healthy servers. Amazon Auto Scaling ensures unhealthy hosts are removed and replaced with healthy ones to maintain high availability.
 
 Our **hypothesis** is confirmed:
-> Hypothesis: If an the server process on a single instance is killed, then availability will not be impacted
+> Hypothesis: If the server process on a single instance is killed, then availability will not be impacted
 
 {{< prev_next_button link_prev_url="../6_failure_injection_az" link_next_url="../8_failure_injection_optional/" />}}
