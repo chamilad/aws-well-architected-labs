@@ -22,8 +22,8 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
 
 1. There are three EC2 instances with a name beginning with **WebServerforResiliency**. For these EC2 instances note:
       1. Each has a unique *Instance ID*
+      1. All instances are running and healthy
       1. There is one instance per each Availability Zone
-      1. All instances are healthy
 
     ![EC2InitialCheck](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/EC2InitialCheck.png)
 

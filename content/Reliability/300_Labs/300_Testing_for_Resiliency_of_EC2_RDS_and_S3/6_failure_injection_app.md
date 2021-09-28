@@ -3,8 +3,9 @@ title: "Test Resiliency Using Application Failure Injection"
 menutitle: "Application Failure Injection"
 date: 2021-09-14T11:16:08-04:00
 chapter: false
-pre: "<b>7. </b>"
-weight: 7
+pre: "<b>6. </b>"
+weight: 6
+
 ---
 
 ### 7.1 Web server failure injection
