@@ -29,32 +29,32 @@ The state machine is idempotent and can be re-run if something times out.
 
 If a function fails, you can debug it by creating a test for the Lambda Function. For example, to the test the `DeployVPC` Lambda function, navigate to the StepFunctions console, and select the `DeployVPC` function in the Visual Workflow, and click on the Input in the Step details on the right:
 
-![DeployVpcInput](Images/DeployVpcInput.png)
+![DeployVpcInput](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DeployVpcInput.png)
 
 Once you’ve clicked the Input, you can select the input and copy it into the copy buffer:
 
-![CopyDeployVpcInput](Images/CopyDeployVpcInput.png)
+![CopyDeployVpcInput](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/CopyDeployVpcInput.png)
 
 Then navigate to the Lambda console and click on the `DeployVPC` Lambda Function:
 
-![FindDeployVpcLambda](Images/FindDeployVpcLambda.png)
+![FindDeployVpcLambda](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/FindDeployVpcLambda.png)
 
 You can then click the down arrow to the left of the “Test” button with the
 grayed text “Select a test event..” and click on “Configure test events:”
 
-![ConfigLambdaTestEvent](Images/ConfigLambdaTestEvent.png)
+![ConfigLambdaTestEvent](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/ConfigLambdaTestEvent.png)
 
 Name the event `TestDeployVPC` and insert the copied input from the step
 function, then click “Create:”
 
-![DefineLambdaTestEvent](Images/DefineLambdaTestEvent.png)
+![DefineLambdaTestEvent](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DefineLambdaTestEvent.png)
 
 Now you can click the “Test” button to execute the test:
 
-![TestVpcLambda](Images/TestVpcLambda.png)
+![TestVpcLambda](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/TestVpcLambda.png)
 
 After execution, you can click on the “Details” and see the log of the function to determine what went wrong:
-![ViewLambdaDetails](Images/ViewLambdaDetails.png)
+![ViewLambdaDetails](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/ViewLambdaDetails.png)
 
 You can also go to the CloudWatch logs to see details of the execution.
 
@@ -76,7 +76,7 @@ Solution:
 
 If your deployment machine fails and looks like this
 
-![RDSDeployTimedOut](Images/RDSDeployTimedOut.png)
+![RDSDeployTimedOut](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/RDSDeployTimedOut.png)
 
 And if the following is true:
 
@@ -97,7 +97,7 @@ Then it is likley that your RDS deployment timed out before the workflow could c
 1. Click **New Execution**
 1. Give your execution a new name, unique from previous ones (such as "BuildResiliency3")
 
-    ![RDSDbConnections-full](Images/RDSDbConnections-full.png)
+    ![RDSDbConnections-full](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/RDSDbConnections-full.png)
 
 * The workflow will quickly determine which stacks have already been deployed, and start immediately on the final (web server) stack.
 
