@@ -103,9 +103,9 @@ Choose the appropriate section below for your language
 
             $ sudo apt install maven
 
-      * Next choose one of the following options: **Option A** or **Option B**.
+1. Next choose one of the following options: **Option A** or **Option B**.
 
-1. **Option A**: If you are comfortable with git
+    * **Option A**: If you are comfortable with git
       1. Clone the aws-well-architected-labs repo
 
               $ git clone https://github.com/awslabs/aws-well-architected-labs.git
@@ -117,12 +117,12 @@ Choose the appropriate section below for your language
 
               cd aws-well-architected-labs/static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/java/appresiliency/
 
-1. **Option B**:
+    * **Option B**:
       1. Download the zipfile of the executables at the following URL <https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/javaresiliency.zip>
+      1. unzip it
       1. go to the build directory: `cd java/appresiliency`
 
-1. Build: `mvn clean package shade:shade`
-      
+1. Build: `sudo mvn clean package shade:shade`    
 
 1. `cd target` - this is where your `jar` files were built and where you can run from the command line
 
