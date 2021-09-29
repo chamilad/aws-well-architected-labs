@@ -13,9 +13,23 @@ You have a choice of environments from which to execute the failure injections f
 
 In addition to custom scripts, you can also perform failure injection experiments using [AWS Fault Injection Simulator (FIS)](https://aws.amazon.com/fis/).
 
-### 2.1 Setup AWS credentials and configuration
+### 2.1 Setup AWS CloudShell
 
-Your execution environment needs to be configured to enable access to the AWS account you are using for the workshop. This includes
+If you will be using **bash**, **Java**, or **Python**, and are comfortable with Linux, it is highly recommended you use AWS CloudShell for this lab. If you will _not_ be using AWS CloudShell, then skip to [Step 2.2](#setupcreds)
+
+1. Go to the [AWS CloudShell console here](https://us-east-2.console.aws.amazon.com/cloudshell/home)
+1. If this is your first time running CloudShell, then it will take less than a minute to create the environment. When you see a prompt like `[cloudshell-user@ip-10-0-49-48 ~]$`, then you can continue
+1. Validate that credentials are properly setup. 
+    * execute the command `aws sts get-caller-identity`
+    * If the command succeeds, anf the **Arn** contains **assumed-role/TeamRole/MasterKey**, then you can continue
+1. Skip to [Step 2.3](#setupenv)
+
+
+### 2.2 Setup AWS credentials and configuration {#setupcreds}
+
+**If you have chosen to use AWS CloudShell or Windows PowerShell, then _skip_ this step** 
+
+Otherwise, your execution environment needs to be configured to enable access to the AWS account you are using for the workshop. This includes:
 
 * Credentials - You identified these credentials [back in step 1]({{< ref "./1_deploy_infra.md#awslogin" >}})
     * AWS access key
@@ -28,21 +42,26 @@ Your execution environment needs to be configured to enable access to the AWS ac
 
 Note: **us-east-2** is the **Ohio** region
 
-If you already know how to configure these, please do so now. If you need help or if you are planning to use **PowerShell** for this lab, then [follow these instructions]({{< ref "Documentation/AWS_Credentials.md" >}})
+* If you already know how to configure these, please do so now.
+* If you need help, then [follow these instructions]({{< ref "Documentation/AWS_Credentials.md" >}})
+* If you are using **PowerShell** for this lab, skip this step and continue to **Step 2.3**
 
-### 2.2 Set up the bash environment {#bash}
+
+### 2.3 Set up the programming language environment {#setupenv}
+
+Choose the appropriate section below for your language
+
+Using bash is an effective way to execute the failure injection tests for this workshop. The bash scripts make use of the AWS CLI. Or if you wish, you may choose one of the other languages and scripts.
 
 {{% expand "Click here for instructions if using bash:" %}}
-
-Using bash is an effective way to execute the failure injection tests for this workshop. The bash scripts make use of the AWS CLI. If you will be using bash, then follow the directions in this section. If you cannot use bash, then [skip to the next section](#notbash).
 
 1. Prerequisites
 
      * `awscli` AWS CLI installed
 
             $ aws --version
-            aws-cli/1.16.249 Python/3.6.8...
-         * Version 1.1 or higher is fine
+            aws-cli/2.2.15 Python/3.8.8...
+         * Version 2.1.12 or higher is fine
          * If you instead got `command not found` then [see instructions here to install `awscli`]({{< ref "Documentation/Software_Install.md#install-aws-cli" >}})
 
      * `jq` command-line JSON processor installed.
@@ -66,14 +85,18 @@ Using bash is an effective way to execute the failure injection tests for this w
         chmod u+x fail_az.sh
 
 {{% /expand %}}
-
-### 2.3 Set up the programming language environment (for Python, Java, C#, or PowerShell) {#notbash}
-
-Choose the appropriate section below for your language
-
 {{% expand "Click here for instructions if using Python:" %}}
 
-1. The scripts are written in python with boto3. On Amazon Linux, this is already installed. Use your local operating system instructions to install boto3: <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation>
+1. Check that **python 3** is installed. This is _already_ installed with AWS CloudShell or Amazon Linux.
+      ```
+      $ python3 --version
+      Python 3.7.10
+      ```
+    * Any version is fine
+
+1. The scripts are written in python with **boto3**. This is _already_ installed with AWS CloudShell or Amazon Linux.
+    * Check that boto3 is installed using this command `pip show boto3`
+    * If it _not_ installed, then use your local operating system instructions to install boto3: <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation>
 
 
 1. Download the {{% githublink link_name="resiliency Python scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
@@ -105,7 +128,7 @@ Choose the appropriate section below for your language
 
 1. Next choose one of the following options: **Option A** or **Option B**.
 
-    * **Option A**: If you are comfortable with git
+    * **Option A**: If you are comfortable with git.
       1. Clone the aws-well-architected-labs repo
 
               $ git clone https://github.com/awslabs/aws-well-architected-labs.git
@@ -137,7 +160,7 @@ Choose the appropriate section below for your language
 {{% /expand %}}
 {{% expand "Click here for instructions if using PowerShell:" %}}
 
-1. If you do not have the AWS Tools for Powershell, download and install them following the instructions here. <https://aws.amazon.com/powershell/>
+1. To install the necessary AWS Tools for Powershell packages, and to setup AWS credentials for PowerShell follow the [instructions here](../documentation/tools_for_powershell/)
 
 1. Download the {{% githublink link_name="resiliency PowerShell scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
       * [powershell/fail_instance.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/fail_instance.ps1)
@@ -148,7 +171,7 @@ Choose the appropriate section below for your language
 
 {{% /expand %}}
 
-### 2.4 Create IAM Role for FIS
+### 2.4 IAM Role for FIS
 
 In this lab, some of the experiments will be executed AWS Fault Injection Simulator (FIS) in addition to using custom scripts. FIS needs a service role to inject failures for various components of a workload.
 

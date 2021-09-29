@@ -34,7 +34,7 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
     | Language   | Command                                             |
     | :--------- | :-------------------------------------------------- |
     | Bash       | `./fail_az.sh <az> <vpc-id>`                        |
-    | Python     | `python fail_az.py <vpc-id> <az>`                   |
+    | Python     | `python3 fail_az.py <vpc-id> <az>`                   |
     | Java       | `java -jar app-resiliency-1.0.jar AZ <vpc-id> <az>` |
     | C#         | `.\AppResiliency AZ <vpc-id> <az>`                  |
     | PowerShell | `.\fail_az.ps1 <az> <vpc-id>`                       |

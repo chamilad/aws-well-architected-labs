@@ -36,7 +36,7 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
     | Language   | Command                                         |
     | :--------- | :---------------------------------------------- |
     | Bash       | `./fail_instance.sh <vpc-id>`                   |
-    | Python     | `python fail_instance.py <vpc-id>`              |
+    | Python     | `python3 fail_instance.py <vpc-id>`              |
     | Java       | `java -jar app-resiliency-1.0.jar EC2 <vpc-id>` |
     | C#         | `.\AppResiliency EC2 <vpc-id>`                  |
     | PowerShell | `.\fail_instance.ps1 <vpc-id>`                  |

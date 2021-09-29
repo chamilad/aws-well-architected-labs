@@ -45,7 +45,7 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
     | Language   | Command                                         |
     | :--------- | :---------------------------------------------- |
     | Bash       | `./failover_rds.sh <vpc-id>`                    |
-    | Python     | `python fail_rds.py <vpc-id>`                   |
+    | Python     | `python3 fail_rds.py <vpc-id>`                   |
     | Java       | `java -jar app-resiliency-1.0.jar RDS <vpc-id>` |
     | C#         | `.\AppResiliency RDS <vpc-id>`                  |
     | PowerShell | `.\failover_rds.ps1 <vpc-id>`                   |
