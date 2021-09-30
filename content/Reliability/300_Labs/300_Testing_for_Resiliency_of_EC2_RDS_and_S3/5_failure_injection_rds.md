@@ -22,10 +22,10 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
 1. Before you initiate the failure simulation, refresh the service website several times. Every time the image is loaded, the website writes a record to the Amazon RDS database
 
 1. Click on **click here to go to other page** and it will show the latest ten entries in the Amazon RDS DB
-      1. The DB table shows "hits" on our _image page_
-      1. Website URL access requests are shown here for traffic against the _image page_. These include IPs of browser traffic as well as IPs of load balancer health checks
+      1. The DB table shows "hits" on your _image web page_
+      1. Website URL access requests are shown here for traffic against the _image web page_. These include IPs of browser traffic as well as IPs of load balancer health checks
       1. For each region the AWS Elastic Load Balancer makes these health checks, so you will see three IP addresses from these
-      1. Click on **click here to go to other page** again to return to the _image page_
+      1. Click on **click here to go to other page** again to return to the _image web page_
 
 1. Go to the RDS Dashboard in the AWS Console at <http://console.aws.amazon.com/rds>
 
@@ -74,11 +74,11 @@ Watch how the service responds. Note how AWS systems help maintain service avail
 
          ![DBPostFailConfiguration](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DBPostFailConfiguration.png)
 
-      1. From the AWS RDS console, click on the **Logs & events** tab and scroll down to **Recent events**. You should see entries like those below. In this case failover took less than a minute.
+      1. From the AWS RDS console, click on the **Logs & events** tab and scroll down to **Recent events**. You should see entries like those below. (Note: you may need to page over to the most recent events) .In this case failover took less than a minute.
 
-              Mon, 14 Oct 2019 19:53:37 GMT - Multi-AZ instance failover started.
-              Mon, 14 Oct 2019 19:53:45 GMT - DB instance restarted
-              Mon, 14 Oct 2019 19:54:21 GMT - Multi-AZ instance failover completed
+              Mon, 11 Oct 2021 19:53:37 GMT - Multi-AZ instance failover started.
+              Mon, 11 Oct 2021 19:53:45 GMT - DB instance restarted
+              Mon, 11 Oct 2021 19:54:21 GMT - Multi-AZ instance failover completed
 
 #### 5.2.3 EC2 server replacement
 
@@ -114,7 +114,7 @@ Use _either_ the **Express Steps** or **Detailed Steps** below:
 ##### Express Steps
 1. Go to the AWS CloudFormation console at <https://console.aws.amazon.com/cloudformation>
 1. For the **WebServersForResiliencyTesting** Cloudformation stack
-   1. Redeploy the stack and **Use current template**
+   1. Redeploy (Update) the stack and **Use current template**
    1. Change the **BootObject** parameter to `server_with_reconnect.py`
 
 ##### Detailed Steps
@@ -126,13 +126,17 @@ Use _either_ the **Express Steps** or **Detailed Steps** below:
 1. On the **Parameters** page, find the  **BootObject** parameter and replace the value there with `server_with_reconnect.py`
 1. Click **Next**
 1. Click **Next**
-1. Scroll to the bottom and under **Change set preview** note that you are changing the **WebServerAutoscalingGroup** and **WebServerLaunchConfiguration**. This CloudFormation deployment will modify the launch configuration to use the improved server code.
+1. Scroll to the bottom and under **Changes (2)** note that you are changing the **WebServerAutoscalingGroup** and **WebServerLaunchConfiguration**. This CloudFormation deployment will modify the launch configuration to use the improved server code.
 1. Check **I acknowledge that AWS CloudFormation might create IAM resources.**
 1. Click **Update stack**
-1. Go the **Events** tab for the **WebServersForResiliencyTesting** Cloudformation stack and observe the progress. When the status is **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue.
+1. Go the **Events** tab for the **WebServersForResiliencyTesting** Cloudformation stack and observe the progress. When the status is **UPDATE_COMPLETE** or **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue.
 {{% /expand%}}
 
-* Now re-run the experiment as per the steps below
+* This update deploys three new EC2 instances in a new Auto Scaling group. There may be a period that you will still see the old three instances running, before they are drained and terminated.
+* There may be a short period of unavailability. Make sure the web site is available before continuing.
+
+
+Now you will re-run the experiment as per the steps below:
 * Before we used a customer script. For this run of the experiment, we will show how to use AWS Fault Injection Simulator (FIS)
 
 ### 5.4 RDS failure injection using AWS Fault Injection Simulator (FIS) {#rdsfailureinjectionfis}
@@ -159,7 +163,7 @@ We would not normally change our execution approach as part of the "**improve / 
       * Select the **Tags** tab: Note the **Value** for the `Workshop` tag
         ![DBInitialConfiguration](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DBInitialConfiguration.png)
 
-1. Navigate to the FIS console at <http://console.aws.amazon.com/fis> and click **Experiment templates** in the left pane.
+1. Navigate to the [FIS console](https://us-east-2.console.aws.amazon.com/fis/home) and click **Experiment templates** in the left pane.
 
 1. Click on **Create experiment template** to define the type of failure you want to inject.
 
@@ -187,7 +191,7 @@ We would not normally change our execution approach as part of the "**improve / 
 
     ![SelectTargetRDS](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/SelectTargetRDS.png?classes=lab_picture_auto)
 
-1. You can choose to stop running an experiment when certain thresholds are met, in this case, using CloudWatch Alarms under **Stop condition**. For this lab, you can leave this blank.
+1. You can choose to stop running an experiment when certain thresholds are met, in this case, using CloudWatch Alarms under **Stop condition**. For this lab, this is a single point in time event (with no duration) so you can leave this blank.
 
 1. Click **Create experiment template**.
 
@@ -213,7 +217,9 @@ We would not normally change our execution approach as part of the "**improve / 
 
     ![StartExperiment](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StartExperiment.png?classes=lab_picture_auto)
 
+1. Check the website availability. Re-check every 20-30 seconds.
 1. Revisit [section **5.2**](#response) to observe the system response to the RDS instance failure.
+    * At a minimum, return to the RDS console, go the the **Logs & events** tab, and look at the most recent events to verify that a failover has occurred.
 
 #### 5.4.3 RDS failure injection, second experiment - results
 

@@ -93,12 +93,17 @@ Load balancing ensures service requests are not routed to unhealthy resources, s
 1. Click on the **Targets** tab and observe:
       * Status of the instances in the group. The load balancer will only send traffic to healthy instances.
       * When the auto scaling launches a new instance, it is automatically added to the load balancer target group.
-      * In the screen cap below the _unhealthy_ instance is the newly added one.  The load balancer will not send traffic to it until it is completed initializing. It will ultimately transition to _healthy_ and then start receiving traffic.
-      * Note the new instance was started in the same Availability Zone as the failed one. Amazon EC2 Auto Scaling automatically maintains balance across all of the Availability Zones that you specify.
 
-        ![TargetGroups](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/TargetGroups.png)  
+        {{%expand "Click here to see an example of what you might expect to see:" %}}
 
-1. From the same console, now click on the **Monitoring** tab and view metrics such as **Unhealthy hosts** and **Healthy hosts**. What do you see?
+* In the screen cap below the _unhealthy_ instance is the newly added one.  The load balancer will not send traffic to it until it is completed initializing. It will ultimately transition to _healthy_ and then start receiving traffic.
+* Note the new instance was started in the same Availability Zone as the failed one. Amazon EC2 Auto Scaling automatically maintains balance across all of the Availability Zones that you specify.
+
+  ![TargetGroups](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/TargetGroups.png)
+
+        {{% /expand%}}
+
+1. From the same console, now click on the **Monitoring** tab and view metrics such as **Unhealthy hosts** and **Healthy hosts**.
 
 #### 4.2.3 Auto scaling
 
@@ -107,15 +112,19 @@ Autos scaling ensures we have the capacity necessary to meet customer demand. Th
 1. Go to the **Auto Scaling Groups** console you already have open (or [click here to open a new one](http://console.aws.amazon.com/ec2/autoscaling/home?region=us-east-2#AutoScalingGroups:))
       * If there is more than one auto scaling group, select the one with the name that starts with **WebServersforResiliencyTesting**
 
-1. Click on the **Activity History** tab and observe:
-      * The screen cap below shows that all three instances were successfully started at 22:48
-      * At 23:44 the instance targeted by the script was put in _draining_ state and a new instance ending in _...55ee_ was started to replace it.
+1. Click on the **Activity** tab and observe the sequence of events
 
-        ![AutoScalingGroup](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/AutoScalingGroup.png)  
+    {{%expand "Click here to see an example of what you might expect to see:" %}}
+* The screen cap below shows that all three instances were successfully started at 22:48
+* At 23:44 the instance targeted by the script was put in _draining_ state and a new instance ending in _...55ee_ was started to replace it.
+
+  ![AutoScalingGroup](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/AutoScalingGroup.png)  
 
 _Draining_ allows existing, in-flight requests made to an instance to complete, but it will not send any new requests to the instance.
   * *__Learn more__*: After the lab [see this blog post](_https://aws.amazon.com/blogs/aws/elb-connection-draining-remove-instances-from-service-with-care/_) for more information on _draining_.
-  
+
+    {{% /expand%}}
+
 _Auto Scaling_ helps you ensure that you have the correct number of Amazon EC2 instances available to handle the load for your workload.
   * *__Learn more__*: After the lab see [Auto Scaling Groups](_https://docs.aws.amazon.com/autoscaling/ec2/userguide/AutoScalingGroup.html_) to learn more how auto scaling groups are setup and how they distribute instances
 
