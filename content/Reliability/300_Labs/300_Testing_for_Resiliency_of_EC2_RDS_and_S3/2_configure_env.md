@@ -73,12 +73,14 @@ Using bash is an effective way to execute the failure injection tests for this w
          * Version 1.4 or higher is fine
          * If you instead got `command not found` then [see instructions here to install `jq`]({{< ref "Documentation/Software_Install.md#jq" >}})
 
-
-
-1. Download the {{% githublink link_name="resiliency bash scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/bash" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
+1. Download the {{% githublink link_name="resiliency bash scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/bash" %}} to your execution location (this is AWS CloudShell if you are using that for this lab). You can use the following links to download the scripts:
       * [bash/fail_instance.sh](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/bash/fail_instance.sh)
       * [bash/failover_rds.sh](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/bash/failover_rds.sh)
       * [bash/fail_az.sh](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/bash/fail_az.sh)
+
+      > If using Linux, then from your execution location (AWS CloudShell if you are using that for this lab):
+      > * Copy the link URL (from the links above)
+      > * Use this command to download the script:`wget <url>`
 
 1. Set the scripts to be executable.  
 
@@ -97,15 +99,18 @@ Using bash is an effective way to execute the failure injection tests for this w
     * Any version is fine
 
 1. The scripts are written in python with **boto3**. This is _already_ installed with AWS CloudShell or Amazon Linux.
-    * Check that boto3 is installed using this command `pip show boto3`
+    * Check that boto3 is installed using this command `pip3 show boto3`
     * If it _not_ installed, then use your local operating system instructions to install boto3: <https://boto3.amazonaws.com/v1/documentation/api/latest/guide/quickstart.html#installation>
 
 
-1. Download the {{% githublink link_name="resiliency Python scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
+1. Download the {{% githublink link_name="resiliency Python scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/" %}} to your execution location (this is AWS CloudShell if you are using that for this lab). You can use the following links to download the scripts:
       * [python/fail_instance.py](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/fail_instance.py)
       * [python/fail_rds.py](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/fail_rds.py)
       * [python/fail_az.py](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/python/fail_az.py)
 
+      > If using Linux, then from your execution location (AWS CloudShell if you are using that for this lab):
+      > * Copy the link URL (from the links above)
+      > * Use this command to download the script:`wget <url>`
 
 {{% /expand %}}
 {{% expand "Click here for instructions if using Java:" %}}
@@ -164,12 +169,16 @@ Using bash is an effective way to execute the failure injection tests for this w
 
 1. To install the necessary AWS Tools for Powershell packages, and to setup AWS credentials for PowerShell follow the [instructions here](../documentation/tools_for_powershell/)
 
-1. Download the {{% githublink link_name="resiliency PowerShell scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/" %}} to a location convenient for you to execute them. You can use the following links to download the scripts:
+1. Download the {{% githublink link_name="resiliency PowerShell scripts from GitHub" path="static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/" %}} to a location where you can run them from within PowerShell. You can use the following links to download the scripts:
       * [powershell/fail_instance.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/fail_instance.ps1)
       * [powershell/failover_rds.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/failover_rds.ps1)
       * [powershell/fail_az.ps1](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/powershell/fail_az.ps1)
 
-1. If your PowerShell scripts are refused authorization to access your AWS account, consult [Getting Started with the AWS Tools for Windows PowerShell](https://docs.aws.amazon.com/powershell/latest/userguide/pstools-getting-started.html)
+      > To download the script using PowerShell:
+      > * Copy the link URL (from the links above)
+      > * Use this command to download the script:`Invoke-WebRequest "<url>" -OutFile "<filename>"`
+      >     * Replace `<url>` and `<filename>`
+      >     * Keep the quotation marks
 
 {{% /expand %}}
 

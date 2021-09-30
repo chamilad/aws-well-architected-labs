@@ -22,6 +22,7 @@ In [Chaos Engineering](https://principlesofchaos.org/) we always start with a **
 1. Before you initiate the failure simulation, refresh the service website several times. Every time the image is loaded, the website writes a record to the Amazon RDS database
 
 1. Click on **click here to go to other page** and it will show the latest ten entries in the Amazon RDS DB
+        ![DemoWebsiteClickHere](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DemoWebsiteClickHere.png)
       1. The DB table shows "hits" on your _image web page_
       1. Website URL access requests are shown here for traffic against the _image web page_. These include IPs of browser traffic as well as IPs of load balancer health checks
       1. For each region the AWS Elastic Load Balancer makes these health checks, so you will see three IP addresses from these
@@ -130,7 +131,12 @@ Use _either_ the **Express Steps** or **Detailed Steps** below:
 1. Check **I acknowledge that AWS CloudFormation might create IAM resources.**
 1. Click **Update stack**
 1. Go the **Events** tab for the **WebServersForResiliencyTesting** Cloudformation stack and observe the progress. When the status is **UPDATE_COMPLETE** or **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue.
+
 {{% /expand%}}
+
+{{% notice tip %}}
+When you see **UPDATE_COMPLETE_CLEANUP_IN_PROGRESS** you may continue. There is no need to wait.
+{{% /notice %}}
 
 * This update deploys three new EC2 instances in a new Auto Scaling group. There may be a period that you will still see the old three instances running, before they are drained and terminated.
 * There may be a short period of unavailability. Make sure the web site is available before continuing.

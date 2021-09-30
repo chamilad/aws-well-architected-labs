@@ -37,4 +37,6 @@ _Troubleshooting_
 If you get this error: `Install-Module : Administrator rights are required to install modules...`,
 then make sure you are running PowerShell as Administrator. 
 
+For other problems with authorization to access your AWS account, consult [AWS Tools for Windows PowerShell - Using AWS Credentials](https://docs.aws.amazon.com/powershell/latest/userguide/specifying-your-aws-credentials.html)
+
 **Return to the [Lab Guide]({{< ref "../2_configure_env.md#setupenv" >}})**

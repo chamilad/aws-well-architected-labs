@@ -33,15 +33,24 @@ In later steps choose the appropriate instructions for the deployment option you
 
 ### 1.2 Checking for existing service-linked roles
 
-**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
+**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: 
 
-**If you are using your own AWS account**: [Follow these steps]({{< ref "Documentation/Service_Linked_Roles.md#exist_service_linked_roles" >}}), and then return here and resume with the following instructions.
+Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
+
+**If you are using your own AWS account**: 
+{{%expand "Click here for instructions on checking for existing service-linked roles:" %}}
+[Follow these steps]({{< ref "Documentation/Service_Linked_Roles.md#exist_service_linked_roles" >}}), and then return here and resume with the following instructions.
+{{% /expand%}}
 
 ### 1.3 Create the "deployment machine" {#create_statemachine}
 
-**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
+**If you are attending an in-person workshop and were provided with an AWS account by the instructor**:
 
-**If you are using your own AWS account** then run the following steps: 
+Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
+
+**If you are using your own AWS account** 
+
+{{%expand "Click here for instructions on creating the deployment machine" %}}
 
 Here you will build a state machine using AWS Step Functions and AWS Lambda that orchestrates the deployment of the multi-tier infrastructure. This is not the service infrastructure itself, but meta-infrastructure we use to build the actual infrastructure.
 
@@ -82,6 +91,8 @@ Here you will build a state machine using AWS Step Functions and AWS Lambda that
   ![StackCreationStarted](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StackCreationStarted.png)  
   This will take approximately a minute to deploy.  When it shows status `CREATE_COMPLETE`, then you are finished with this step.
 
+{{% /expand%}}
+
 ### 1.4 Deploy infrastructure and run the service {#deployinfra}
 
 1. Go to the AWS Step Function console at <https://console.aws.amazon.com/states>
@@ -121,21 +132,13 @@ Here you will build a state machine using AWS Step Functions and AWS Lambda that
       |Multi-region failure injection tests |NA|50-55 min|
       |Total deployment time|20-25 min|50-55 min|
 
-1. You can watch the state machine as it executes by clicking the icon to expand the visual workflow to the full screen.  
-![StateMachineExecuting](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StateMachineExecuting.png)
+{{% notice tip %}}
+To save time, you can move on to [Step 2](../2_configure_env) now while the application is deploying. Come back later for Step 1.5 after deployment is complete.
+{{% /notice %}}
 
-1. You can also watch the [CloudFormation stacks](https://console.aws.amazon.com/cloudformation) as they are created and transition from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`.
-![DeploymentStacksInProgress](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DeploymentStacksInProgress.png)
-
-1. Note: If you are in a workshop, the instructor will share background and technical information while your service is deployed.
-
-1. You can start the first test (EC2 failure injection testing)  when the web tier has been deployed in the Ohio region. Look for the `WaitForWebApp` step (for **single region**) or `WaitForWebApp1` step (for **multi region**) to have completed successfully.  This will look something like this on the visual workflow.
-
-    ![StepFunctionWebAppDeployed](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StepFunctionWebAppDeployedSingleRegion.png)
-
-     * Above screen shot is for **single region**. for **multi region** see [this diagram instead]({{< ref "Documentation/Multi_Region_State_Machine.md" >}})
-
-> **Note:** To save time, you can move on to [Step 2](../2_configure_env) now while the application is deploying. Come back later for Step 1.5 after deployment is complete.
+{{% notice note %}}
+If you are attending an in-person workshop, then please continue to [Step 2](../2_configure_env) now
+{{% /notice %}}
 
 ### 1.5 View website for test application {#website}
 
@@ -149,5 +152,28 @@ Here you will build a state machine using AWS Step Functions and AWS Lambda that
 ![DemoWebsite](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DemoWebsite.png)
 
 (image will vary depending on what you supplied for `websiteimage`)
+
+### 1.6 Monitoring progress of the deployment
+
+
+1. Go to the AWS Step Function console at <https://console.aws.amazon.com/states>
+
+1. On the Step Functions dashboard, you will see “State Machines”. Click on the one named “DeploymentMachine-*random characters*.” This will bring up an execution console
+
+1. Click on the state machine execution under **Executions**
+
+1. You can watch the state machine as it executes by clicking the icon to expand the visual workflow to the full screen.  
+![StateMachineExecuting](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StateMachineExecuting.png)
+
+1. You can also watch the [CloudFormation stacks](https://console.aws.amazon.com/cloudformation) as they are created and transition from `CREATE_IN_PROGRESS` to `CREATE_COMPLETE`.
+![DeploymentStacksInProgress](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/DeploymentStacksInProgress.png)
+
+1. Note: If you are in a workshop, the instructor will share background and technical information while your service is deployed.
+
+1. You can start the first test (EC2 failure injection testing)  when the web tier has been deployed in the Ohio region. Look for the `WaitForWebApp` step (for **single region**) or `WaitForWebApp1` step (for **multi region**) to have completed successfully.  This will look something like this on the visual workflow.
+
+    ![StepFunctionWebAppDeployed](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/StepFunctionWebAppDeployedSingleRegion.png)
+
+     * Above screen shot is for **single region**. for **multi region** see [this diagram instead]({{< ref "Documentation/Multi_Region_State_Machine.md" >}})
 
 {{< prev_next_button link_prev_url="../" link_next_url="../2_configure_env/" />}}

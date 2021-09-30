@@ -34,7 +34,7 @@ Before testing, please prepare the following:
 1. Get familiar with the service website
       1. Point a web browser at the URL you saved from earlier. (If you do not recall this, then [see these instructions](../1_deploy_infra/#website))
       1. Note the **availability_zone** and **instance_id**
-      1. Refresh the website several times watching these values
+      1. Refresh this website several times watching these values
       1. Note the values change. You have deployed one web server per each of three Availability Zones.
          * The AWS Elastic Load Balancer (ELB) sends your request to any of these three healthy instances.
          * Refer to the diagram at the start of this Lab Guide to review your deployed system architecture.

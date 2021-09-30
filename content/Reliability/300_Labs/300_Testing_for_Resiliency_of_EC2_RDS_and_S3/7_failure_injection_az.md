@@ -94,6 +94,6 @@ This step is optional. To simulate the AZ returning to health do the following:
       1. Uncheck all boxes and click **Edit**
       1. **Actions** >> **Delete network ACL**
 
-* Note how the auto scaling redistributes the EC2 serves across the availability zones
+* Note how the auto scaling redistributes the EC2 servers across the availability zones
 
 {{< prev_next_button link_prev_url="../5_failure_injection_rds" link_next_url="../7_failure_injection_app/" />}}
