@@ -22,6 +22,8 @@ If you will be using **bash**, **Java**, or **Python**, and are comfortable with
 1. Validate that credentials are properly setup. 
     * execute the command `aws sts get-caller-identity`
     * If the command succeeds, anf the **Arn** contains **assumed-role/TeamRole/MasterKey**, then you can continue
+1. Adjust font size and theme using the gear icon on the upper right
+1. Explore the **Actions** menu (upper-right) - you can upload/download files or create new tabs
 1. Skip to [Step 2.3](#setupenv)
 
 

@@ -24,22 +24,28 @@ You will create a multi-tier architecture using AWS and run a simple service on 
     * If you do not have this IAM user's credentials or you wish to create a new IAM user with needed permissions, follow the [instructions here to create them]({{< ref "Documentation/Self_AWS_Account.md" >}})
 {{% /expand%}}
 
+{{% notice note %}}
+ Decide which deployment option you will use for this lab. It can be run as **single region** *or* **multi region** (two region) deployment. If you are attending an _in-person workshop_, use **single region** 
+{{% /notice %}}
+In later steps choose the appropriate instructions for the deployment option you you have decided upon.
+* **single region** is faster to get up and running
+* **multi region** enables you to test some additional aspects of cross-regional resilience.
+
 ### 1.2 Checking for existing service-linked roles
 
-**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: Skip this step and go directly to step [Create the "deployment machine"](#create_statemachine).
+**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
 
 **If you are using your own AWS account**: [Follow these steps]({{< ref "Documentation/Service_Linked_Roles.md#exist_service_linked_roles" >}}), and then return here and resume with the following instructions.
 
 ### 1.3 Create the "deployment machine" {#create_statemachine}
 
+**If you are attending an in-person workshop and were provided with an AWS account by the instructor**: Skip this step and go directly to step [1.4 Deploy infrastructure and run the service](#deployinfra).
+
+**If you are using your own AWS account** then run the following steps: 
+
 Here you will build a state machine using AWS Step Functions and AWS Lambda that orchestrates the deployment of the multi-tier infrastructure. This is not the service infrastructure itself, but meta-infrastructure we use to build the actual infrastructure.
 
 *__Learn more__: After the lab see [this blog post](https://aws.amazon.com/blogs/devops/using-aws-step-functions-state-machines-to-handle-workflow-driven-aws-codepipeline-actions/) on how AWS Step Functions and AWS CodePipelines can work together to deploy your infrastructure*
-
-1. Decide which deployment option you will use for this lab. It can be run as **single region** *or* **multi region** (two region) deployment.
-    * **single region** is faster to get up and running
-    * **multi region** enables you to test some additional aspects of cross-regional resilience.
-    * Decide on one of these options, then in later steps choose the appropriate instructions for the option you have chosen. If you are attending an in-person workshop, your instructor will specify which to use.
 
 1. Get the CloudFormation template: Download the appropriate file (You can right-click then choose download; or you can right click and copy the link to use with `wget`)
     * **single region**: [download CloudFormation template here](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/CloudFormation/lambda_functions_for_deploy.json)
