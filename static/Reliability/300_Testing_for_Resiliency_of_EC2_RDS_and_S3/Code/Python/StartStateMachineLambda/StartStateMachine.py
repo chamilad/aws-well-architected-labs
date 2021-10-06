@@ -10,11 +10,17 @@ def lambda_handler(event, context):
         client = boto3.client('stepfunctions')
 
         statemachineARN = event['ResourceProperties']['StateMachineARN']
+        multiRegion = event['ResourceProperties']['MultiRegion']== "true"
+
+        if multiRegion:
+            statemachineInput = '{"region1": { "log_level": "DEBUG", "region_name": "us-east-2", "secondary_region_name": "us-west-2", "cfn_region": "us-east-2", "cfn_bucket": "aws-well-architected-labs-ohio", "folder": "Reliability/", "workshop": "300-ResiliencyofEC2RDSandS3", "boot_bucket": "aws-well-architected-labs-ohio", "boot_prefix": "Reliability/", "websiteimage" : "https://aws-well-architected-labs-ohio.s3.us-east-2.amazonaws.com/images/Cirque_of_the_Towers.jpg" }, "region2": { "log_level": "DEBUG", "region_name": "us-west-2", "secondary_region_name": "us-east-2", "cfn_region": "us-east-2", "cfn_bucket": "aws-well-architected-labs-ohio", "folder": "Reliability/", "workshop": "300-ResiliencyofEC2RDSandS3", "boot_bucket": "aws-well-architected-labs-ohio", "boot_prefix": "Reliability/", "websiteimage" : "https://aws-well-architected-labs-ohio.s3.us-east-2.amazonaws.com/images/Cirque_of_the_Towers.jpg" } }'
+        else:
+            statemachineInput = '{"log_level": "DEBUG","region_name": "us-east-2","cfn_region": "us-east-2","cfn_bucket": "aws-well-architected-labs-ohio","folder": "Reliability/","workshop": "300-ResiliencyofEC2RDSandS3","boot_bucket": "aws-well-architected-labs-ohio","boot_prefix": "Reliability/","websiteimage" : "https://aws-well-architected-labs-ohio.s3.us-east-2.amazonaws.com/images/Cirque_of_the_Towers.jpg"}'
 
         response = client.start_execution(
             stateMachineArn=statemachineARN,
             name='BuildResiliency',
-            input='{"log_level": "DEBUG","region_name": "us-east-2","cfn_region": "us-east-2","cfn_bucket": "aws-well-architected-labs-ohio","folder": "Reliability/","workshop": "300-ResiliencyofEC2RDSandS3","boot_bucket": "aws-well-architected-labs-ohio","boot_prefix": "Reliability/","websiteimage" : "https://aws-well-architected-labs-ohio.s3.us-east-2.amazonaws.com/images/Cirque_of_the_Towers.jpg"}'
+            input=statemachineInput
         )
 
     responseStatus = 'SUCCESS'

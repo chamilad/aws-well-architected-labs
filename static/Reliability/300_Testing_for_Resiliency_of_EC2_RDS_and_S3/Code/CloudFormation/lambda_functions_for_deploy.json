@@ -647,6 +647,7 @@
 
     "LambdaCustomResourceRole": {
       "Type": "AWS::IAM::Role",
+      "DeletionPolicy" : "Retain",
       "Properties": {
           "RoleName": "LambdaCustomResourceRole-SecureSsmForRds",
           "AssumeRolePolicyDocument": {
@@ -839,7 +840,8 @@
         "Type": "Custom::StartStateMachine",
         "Properties": {
             "ServiceToken": { "Fn::GetAtt" : [ "StartStateMachineLambda", "Arn" ] },
-            "StateMachineARN": {"Ref": "DeploymentMachine"}
+            "StateMachineARN": {"Ref": "DeploymentMachine"},
+            "MultiRegion" : "false"
         }
     },
     "StartStateMachineLambda": {
