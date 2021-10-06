@@ -69,8 +69,36 @@ Solution:
 1. In the AWS console [go to SSM Parameter store](https://us-east-2.console.aws.amazon.com/systems-manager/parameters)
 1. Delete the parameters stored there
 1. Go to the [CloudFormation console](https://console.aws.amazon.com/cloudformation) and delete (roll back) the **ResiliencyVPC** stack
-1. Resume by [re-starting deployment of the infrastructure](Lab_Guide.md#deployinfra)
-   * Note you will need to use a new name, such as _BuildResiliency2_
+1. Resume by re-starting deployment of the infrastructure
+
+    1. Go to the AWS Step Function console at <https://console.aws.amazon.com/states>
+
+    1. On the Step Functions dashboard, you will see “State Machines” and you will have a new one named “DeploymentMachine-*random characters*.” Click on that state machine. This will bring up an execution console. Click on the “Start execution” button.
+    ![ExecutionStart-ohio](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/ExecutionStart-ohio.png)
+
+    1. On the "New execution" dialog, for "Enter an execution name" delete the auto-generated name and replace it with:  `BuildResiliency`
+
+    1. Then for "Input" enter JSON that will be used to supply parameter values to the Lambdas in the workflow.
+        * **single region** uses the following values:
+
+                {
+                "log_level": "DEBUG",
+                "region_name": "us-east-2",
+                "cfn_region": "us-east-2",
+                "cfn_bucket": "aws-well-architected-labs-ohio",
+                "folder": "Reliability/",
+                "workshop": "300-ResiliencyofEC2RDSandS3",
+                "boot_bucket": "aws-well-architected-labs-ohio",
+                "boot_prefix": "Reliability/",
+                "websiteimage" : "https://aws-well-architected-labs-ohio.s3.us-east-2.amazonaws.com/images/Cirque_of_the_Towers.jpg"
+                }
+
+        * **multi region** uses the [values here]({{< ref "Documentation/Multi_Region_Event_Data.md" >}})
+        * **Note**: for `websiteimage` you can supply an alternate link to a public-read-only image in an S3 bucket you control. This will allow you to run S3 resiliency tests as part of the lab
+        * Then click the “Start Execution” button.
+
+            ![ExecutionInput-ohio](/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Images/ExecutionInput-ohio.png)  
+
 
 ## RDSStackCompleteChoice -> DeployFailedStatus
 

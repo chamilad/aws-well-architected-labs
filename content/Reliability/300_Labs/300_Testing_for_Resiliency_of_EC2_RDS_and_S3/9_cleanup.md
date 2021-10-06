@@ -98,7 +98,7 @@ The password(s) for your Amazon RDS instances were stored in AWS Systems Manager
 
 Using AWS CLI:
 
-* In the following command use the [workshop name supplied in step 1.4.4.](#deployinfra) when you ran the step function state machine. If you kept the defaults, the command will work as-is:
+* The following command will delete the parameter:
 
         aws ssm delete-parameter --name 300-ResiliencyofEC2RDSandS3
 
