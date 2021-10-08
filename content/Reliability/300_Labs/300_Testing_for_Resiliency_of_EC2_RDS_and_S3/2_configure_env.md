@@ -160,9 +160,25 @@ Using bash is an effective way to execute the failure injection tests for this w
 {{% /expand %}}
 {{% expand "Click here for instructions if using C#:" %}}
 
-1. Download the zipfile of the executables at the following URL. [https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/csharpresiliency.zip](https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/csharpresiliency.zip)  
+1. Download the zipfile of the executable at the following URL. [https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/csharpresiliency.zip](https://s3.us-east-2.amazonaws.com/aws-well-architected-labs-ohio/Reliability/csharpresiliency.zip)  
 
-2. Unzip the folder in a location convenient for you to execute the command line programs.  
+1. Unzip the folder in a location convenient for you to execute the command line program.  
+    * The executable is called `AppResiliency.exe`
+    * It is in the `win10-x64` folder
+    * Later, when it is time to run you your experiments, you should run the executable from a Windows command prompt
+
+1. Avoid potential credentials problems
+    * Check to see if you have a file `%USERPROFILE%\AppData\Local\AWSToolkit\RegisteredAccounts.json`
+    * If so, then this file may override the AWS credentials you need to run the lab
+    * You can rename it so that it does not interfere with the lab 
+
+    ```
+    move  %USERPROFILE%\AppData\Local\AWSToolkit\RegisteredAccounts.json %USERPROFILE%\AppData\Local\AWSToolkit\RegisteredAccounts-BAK.json
+    ```
+
+    * and then move it back if you want, after the lab
+
+1. To view or download the source code, see [this github repo](https://github.com/awslabs/aws-well-architected-labs/tree/master/static/Reliability/300_Testing_for_Resiliency_of_EC2_RDS_and_S3/Code/FailureSimulations/c%23)
 
 {{% /expand %}}
 {{% expand "Click here for instructions if using PowerShell:" %}}
