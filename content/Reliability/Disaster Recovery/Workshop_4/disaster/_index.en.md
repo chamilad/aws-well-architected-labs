@@ -1,7 +1,7 @@
 +++
-title = "Disaster!"
+title = "Failover to Secondary"
 date =  2021-05-11T11:43:28-04:00
-weight = 5
+weight = 7
 +++
 
 When a regional service event affects the Unicorn application in the Primary, N. Virginia (us-east-1) region, you want to fail-over to Secondary, N. California (us-west-1) region.
@@ -10,7 +10,7 @@ We assume a regional service event has occurred. In this section, we will manual
 
 Before simulating the outage, we need to create test data through the web application. This step requires creating enrolling in the store, then adding items into the shopping cart.  After the outage, the user’s session should remain active and uninterrupted.
 
-## Create and Populate the Shopping Cart
+### Create and Populate the Shopping Cart
 
 1.1 Navigate to the **CloudFront Domain Name** using your favorite browser.
 
@@ -32,23 +32,21 @@ If you don't have your **CloudFront Domain Name**, you can retrieve it via **Ste
 
 1.5 Add/remove items to your shopping cart by clicking on a Unicorn, followed by clicking the **Add to cart** button.
 
-## Simulating a Regional Service Event
+### Simulating a Regional Service Event
 
-We will now simulate a regional service event affecting the S3 static website in N. Virginia (us-east-1) serving The Unicorn Shop website.
+We will now simulate a regional service event affecting the S3 static website in **N. Virginia (us-east-1)** serving The Unicorn Shop website.
 
-2.2  Navigate to **S3** in the console.
+2.1 Navigate to [S3](https://console.aws.amazon.com/s3/home?region=us-east-1#/).
 
-{{< img d-4.png >}}
-
-2.3 Click into the **active-primary-uibucket-xxxx** bucket.
+2.2 Click into the **active-primary-uibucket-xxxx** bucket.
 
 {{< img c-9.png >}}
 
-2.4 Under the **Permissions** tab, click the **Edit** button to modify the **Block public access (bucket settings)** configuration.
+2.3 Under the **Permissions** tab, click the **Edit** button to modify the **Block public access (bucket settings)** configuration.
 
 {{< img d-6.png >}}
 
-2.5 Enable the **Block all public access** checkbox and then click the **Save** button.
+2.4 Enable the **Block all public access** checkbox and then click the **Save** button.
 
 {{< img d-7.png >}}
 

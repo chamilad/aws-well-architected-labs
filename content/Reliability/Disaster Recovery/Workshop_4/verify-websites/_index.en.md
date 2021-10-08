@@ -1,13 +1,13 @@
 +++
 title = "Verify Websites"
 date =  2021-05-11T11:43:28-04:00
-weight = 3
+weight = 5
 +++
 
-## Verify the Active-Primary Website
+### Verify the Active-Primary Website
 
 {{% notice note %}}
-You will need the Amazon CloudFormation output parameter values from the `Active-Primary` stack to complete this section.
+You will need the Amazon CloudFormation output parameter values from the `Active-Primary` stack to complete this section. For help, refer to the [CloudFormation Outputs](../prerequisites/cfn-outputs/) section of the workshop.
 {{% /notice %}}
 
 {{< img pr-6.png >}}
@@ -18,10 +18,10 @@ You will need the Amazon CloudFormation output parameter values from the `Active
 
 {{< img vw-5.png >}}
 
-## Verify the Passive-Secondary Website
+### Verify the Passive-Secondary Website
 
 {{% notice note %}}
-You will need the Amazon CloudFormation output parameter values from the `Passive-Secondary` stack to complete this section.
+You will need the Amazon CloudFormation output parameter values from the `Passive-Secondary` stack to complete this section. For help, refer to the [CloudFormation Outputs](../prerequisites/cfn-outputs/) section of the workshop.
 {{% /notice %}}
 
 {{< img sr-6.png >}}
@@ -32,5 +32,5 @@ You will need the Amazon CloudFormation output parameter values from the `Passiv
 
 {{< img vw-6.png >}}
 
-{{< prev_next_button link_prev_url="../prerequisites/secondary-region/" link_next_url="../setup-cloudfront/" />}}
+{{< prev_next_button link_prev_url="../configure-websites/" link_next_url="../setup-cloudfront/" />}}
 
