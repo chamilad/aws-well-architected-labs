@@ -18,12 +18,13 @@ tags:
 </center>
 {{< /rawhtml >}}
 
-## Authors
+## Contributors
 
 * Rodney Lester, Senior Solutions Architect Manager, AWS Well-Architected
-* Adrian Hornsby, Principal Tech Evangelist, AWS
 * Seth Eliot, Principal Reliability Solutions Architect, AWS Well-Architected
 * Mahanth Jayadeva, Solutions Architect, AWS Well-Architected
+* Michael Haken, Principal Technologist, AWS
+* Adrian Hornsby, Principal Tech Evangelist, AWS
 
 ## Introduction
 
